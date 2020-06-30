@@ -1,36 +1,27 @@
 # -*- coding: utf-8 -*-
-from django.forms import ModelForm 
+from django.forms import ModelForm, Textarea
 from django import forms 
 from django.contrib.auth.models import User
 from onepage.models import *
 
 
 
-class UserModelForm(forms.ModelForm):
+class AboultModelForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['username','email', 'password']
+        model = Aboult
+        fields = ['h3title','content', 'url_video', 'capa_video']
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control', 'maxlength':255}),
-            'email':forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
-            'password':forms.PasswordInput(attrs={'class':'form-control', 'maxlength':255}),
-
+            'h3title': forms.TextInput(attrs={'class': 'form-control', 'maxlength':55}),
+            'content':Textarea(attrs={'class':'form-control', 'maxlength':1250, 'rows':5, 'cols':40}),
+            'url_video':forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'capa_video': forms.FileInput(attrs={'class':'form-control'})
         }
 
         error_messages={
-            'username':{
+            'h3title':{
                 'required':'Campo obrigatório'
             },
-            'email':{
-                'required':'Campo obrigatório'
-            },
-            'password':{
+            'content':{
                 'required':'Campo obrigatório'
             },
         }
-    def save(self, commit=True):
-        user = super(UserModelForm, self).save(commit=False)
-        user.set_password(self.cleaned_data['password'])
-        if commit:
-            user.save()
-        return user    

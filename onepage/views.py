@@ -2,12 +2,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from .forms import *
 def index(request):
 	return render(request, 'onepage/index.html')
 
 def panel(request):
 	user = User.objects.get(id=request.user.id)
-	return render(request, 'onepage/panel.html',{'user':user})
+	form_aboult = AboultModelForm()
+	return render(request, 'onepage/panel.html',{'user':user, 'form_aboult': form_aboult})
 
 @login_required
 def update(request):
@@ -30,3 +32,8 @@ def do_login(request):
 def do_logout(request):
 	logout(request)
 	return redirect('/login')
+
+def add_aboult(request):
+	if request.method == 'POST':
+		pass
+		
