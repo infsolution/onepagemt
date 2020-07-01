@@ -85,11 +85,17 @@
         <div class="carousel-inner" role="listbox">
 
           <!-- Slide 1 -->
-          <div class="carousel-item active" style="background: url({% static 'assets/img/slide/slide-1.jpg' %});">
+          {% if datas.heros %}
+          {% for hero in datas.heros %}
+          {% if hero == datas.heros.all.0 %}
+          <div class="carousel-item active" style="background: url({{hero.imagem_de_fundo}});">
+          {% else %}
+          <div class="carousel-item" style="background: url({{hero.imagem_de_fundo}});">
+            {%endif%}
             <div class="carousel-container">
               <div class="carousel-content">
-                <h2 class="animate__animated animate__fadeInDown"><span></span>Maravilhas da Terra</h2>
-                <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
+                <h2 class="animate__animated animate__fadeInDown"><span></span>{{hero.titulo}}</h2>
+                <p class="animate__animated animate__fadeInUp">{{hero.conteudo}}</p>
                 <div>
                   <a href="#menu" class="btn-menu animate__animated animate__fadeInUp scrollto">Nossos Produtos</a>
                   <a href="#book-a-table" class="btn-book animate__animated animate__fadeInUp scrollto">Me Cadastrar</a>
@@ -97,8 +103,9 @@
               </div>
             </div>
           </div>
-
-          <!-- Slide 2 -->
+          {% endfor %}
+          {% endif %}
+          <!-- Slide 2 >
           <div class="carousel-item" style="background: url(assets/img/slide/slide-2.jpg);">
             <div class="carousel-container">
               <div class="carousel-content">
@@ -110,9 +117,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div-->
 
-          <!-- Slide 3 -->
+          <!-- Slide 3 >
           <div class="carousel-item" style="background: url(assets/img/slide/slide-3.jpg);">
             <div class="carousel-background"><img src="assets/img/slide/slide-3.jpg" alt=""></div>
             <div class="carousel-container">
@@ -125,7 +132,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div-->
 
         </div>
 
@@ -151,18 +158,18 @@
 
         <div class="row">
 
-          <div class="col-lg-5 align-items-stretch video-box" style='background-image: url({% static "assets/img/about.jpg" %});'>
-            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
+          <div class="col-lg-5 align-items-stretch video-box" style='background-image: url("{{datas.aboult.capa_video}}");'>
+            <a href="{{datas.aboult.url_video}}" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
           </div>
 
           <div class="col-lg-7 d-flex flex-column justify-content-center align-items-stretch">
 
             <div class="content">
-              <h3><strong>velit pariatur architecto aut nihilkajd asdfdsafasdfdsf</strong></h3>
+              <h3><strong>{{datas.aboult.h3title}}</strong></h3>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+                {{ datas.aboult.content }}
               </p>
-              <p class="font-italic">
+              <!--p class="font-italic">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
                 magna aliqua.
               </p>
@@ -175,7 +182,7 @@
                 Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
                 velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
                 culpa qui officia deserunt mollit anim id est laborum
-              </p>
+              </p-->
             </div>
 
           </div>

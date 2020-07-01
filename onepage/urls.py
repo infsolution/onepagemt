@@ -7,4 +7,8 @@ urlpatterns = [
     path('update/', views.update, name='update'),
     path('login/',views.do_login, name='login'),
     path('logout/',views.do_logout, name='logout'),
+    path('aboult', views.add_aboult, name='aboult'),
+    path('hero', views.add_hero, name='hero'),
+    path('hero/<int:hero_id>', views.add_hero, name='edit_delete_hero'),
+
 ]

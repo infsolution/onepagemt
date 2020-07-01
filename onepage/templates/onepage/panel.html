@@ -1,7 +1,14 @@
 {% extends "onepage/base.html" %}
+{% block scripts %}
+<script>
+function show_content(element, text){
+	var show_item = document.getElementById(element).innerHTML=document.getElementById(text).innerHTML;
+}
+</script>
+{% endblock %}
 {% block body %}
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	  <a class="navbar-brand" href="#">Navbar</a>
+	  <a class="navbar-brand" href="{% url 'index' %}">Emagrecendo com chá</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
@@ -9,17 +16,17 @@
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	        <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
 	      </li>
-	      <li class="nav-item">
+	      <!--li class="nav-item">
 	        <a class="nav-link" href="#">Link</a>
-	      </li>
+	      </li-->
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	          Dropdown
+	          Opções
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	          <a class="dropdown-item" href="#">Action</a>
+	          <a class="dropdown-item" href="{% url 'panel' %}">Panel</a>
 	          <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
 	          <div class="dropdown-divider"></div>
 	          <a class="dropdown-item" href="#">Something else here</a>
@@ -35,28 +42,113 @@
 
 	<main id="main">
 			<div class="row">
-			  	<div class="col-md-3">
+			  	<div class="col-md-2">
 			  		<ul class="sidenav">
-				        <li onclick="show_content('show','aboult')">About</li>
-				        <li>Menu</li>
-				        <li>Specials</li>
-				        <li>Events</li>
-				        <li>Chefs</li>
-				        <li>Gallery</li>
-				        <li>Contact</li>
+				        <li onclick="show_content('show','aboult')">Sobre nós</li>
+						<li onclick="show_content('show','hero')">Apresentação</li>
+						<li onclick="show_content('show','hero')">Produtos</li>
+				        <li onclick="show_content('show','ressultados')">Reseultados</li>
+				        <li onclick="show_content('show','author')">Leni</li>
+				        <li onclick="show_content('show','galeria')">Galeria</li>
+				        <li onclick="show_content('show','contatos')">Contatos</li>
         			</ul>
         		</div>
-			  	<div class="col-md-9">
-			  		<dir id="show" style="display: block"></dir>
+			  	<div class="col-md-10">
+					<div class="container">
+						{% if error %}
+							{{ error }}
+						{% endif %}
+			  			<dir id="show" style="display: block"></dir>
 
-			  		<div id="aboult" style="display: none;">
-			  			<form method="post">
-						  {% csrf_token %}
-						  {{ form_aboult }}
-						  <button type="submit">Criar aboult</button>
-						</form>
-			  		</div>
-			  	</div>
+						<div id="aboult" style="display: none;">
+							<h2>Atualização da Seção Sobre nós</h2>
+							<form action="{% url 'aboult' %}" method="post" enctype="multipart/form-data">
+							{% csrf_token %}
+							{{ form_aboult }}
+							<button type="submit" class="form-control btn-primary">Criar aboult</button>
+							</form>
+						</div>
+
+						<div id="hero" style="display: none;">
+							<h2>Criar Apresentação</h2>
+							<form action="{% url 'hero' %}" method="post" enctype="multipart/form-data">
+							{% csrf_token %}
+							{{ form_hero }}
+							<button type="submit" class="form-control btn-primary">Criar apresentação</button>
+							</form>
+							<h2>Apresentações</h2>
+							<table class="table table-houver">
+								<thead>
+									<tr>
+										<th>Titulo</th>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									
+									{% if heros %}
+									{% for hero in heros %}
+									<tr>
+										<th>{{hero.titulo}}</th>
+										<th>
+											<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal{{hero.id}}" data-whatever="@getbootstrap">Editar</button>
+																		<!--MODAL EDIT HERO-->
+							<div class="modal fade" id="modal{{hero.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+								  <div class="modal-content">
+									<div class="modal-header">
+									  <h5 class="modal-title" id="exampleModalLabel">Editar apresentação</h5>
+									  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									  </button>
+									</div>
+									<div class="modal-body">
+									  <form action="{% url 'edit_delete_hero' hero.id %}" method="get" enctype="multipart/form-data">
+										{% csrf_token %}
+										<input type="hidden" name="action" value="edit">
+										<div class="form-group">
+										  <label for="recipient-name" class="col-form-label">Titulo:</label>
+										  <input type="text" name="titulo" class="form-control" maxlength="45" value="{{hero.titulo}}" required id="id_titulo">
+										</div>
+										<div class="form-group">
+										  <label for="message-text" class="col-form-label">Conteúto:</label>
+										  	<textarea name="conteudo" cols="40" rows="5" class="form-control" maxlength="550" required id="id_conteudo">
+												{{hero.conteudo}}
+											</textarea>
+										</div>
+										<div class="form-group">
+											<label for="message-text" class="col-form-label">Imagem de fundo:</label>
+											<input type="file" name="imagem_de_fundo" class="form-control" accept="image/*" id="id_imagem_de_fundo">
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+											<button type="submit" class="btn btn-primary">Editar</button>
+										  </div>
+									  </form>
+									</div>
+								  </div>
+								</div>
+							  </div>
+							  <!-- END MODAL EDIT HERO-->
+										</th>
+										<th>
+											<form action="{% url 'edit_delete_hero' hero.id %}" method="get" >
+												{% csrf_token %}
+												<input type="hidden" name="action" value="delete">
+												<button class="btn btn-danger" >Apagar</button>
+											</form>
+										</th>
+									</tr>	
+									{% endfor %}
+								{% endif %}
+								</tbody>
+
+							</table>
+
+						</div>
+				  </div>
+				</div>
 			</div>
 		</section>	  
 	</main>	
@@ -84,4 +176,5 @@
       </div>
     </div>
   </footer>
+
 {% endblock %}

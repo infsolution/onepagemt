@@ -25,3 +25,13 @@ class AboultModelForm(forms.ModelForm):
                 'required':'Campo obrigatório'
             },
         }
+
+class HeroModelForm(forms.ModelForm):
+    class Meta:
+        model = Hero
+        fields = ['titulo','conteudo','imagem_de_fundo']
+        widgets = {
+            'titulo': forms.TextInput(attrs={'class': 'form-control', 'maxlength':55}),
+            'conteudo': Textarea(attrs={'class':'form-control', 'maxlength':550, 'rows':5, 'cols':40}),
+            'imagem_de_fundo': forms.FileInput(attrs={'class':'form-control'})
+        }
