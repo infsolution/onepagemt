@@ -46,7 +46,7 @@ function show_content(element, text){
 			  		<ul class="sidenav">
 				        <li onclick="show_content('show','aboult')">Sobre nós</li>
 						<li onclick="show_content('show','hero')">Apresentação</li>
-						<li onclick="show_content('show','hero')">Produtos</li>
+						<li onclick="show_content('show','produto')">Produtos</li>
 				        <li onclick="show_content('show','ressultados')">Reseultados</li>
 				        <li onclick="show_content('show','author')">Leni</li>
 				        <li onclick="show_content('show','galeria')">Galeria</li>
@@ -147,6 +147,51 @@ function show_content(element, text){
 							</table>
 
 						</div>
+						<!--SECTIONS PROSUTOS-->
+						<div id="produto" style="display: none;">
+							<div class="row">
+								<div class="col-md-9"><h2>Cadastor de produtos e categorias</h2></div>
+								<div class="col-md-3">
+									<!--MODAL CATEGORIA-->
+									<button type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#modalCategoria" data-whatever="@getbootstrap">Cadastrar Categoria</button>
+									<div class="modal fade" id="modalCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog">
+										  <div class="modal-content">
+											<div class="modal-header">
+											  <h5 class="modal-title" id="exampleModalLabel">Cadastrar categoria</h5>
+											  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											  </button>
+											</div>
+											<div class="modal-body">
+											  <form action="{% url 'categoria' %}" method="post" enctype="multipart/form-data">
+												{% csrf_token %}
+												{{ form_categoria}}
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+													<button type="submit" class="btn btn-primary">Cadastrar</button>
+												  </div>
+											  </form>
+											</div>
+										  </div>
+										</div>
+									  </div>
+									  <!-- END MODAL CATEGORIA-->
+								</div>
+							
+							</div>
+							<form action="{% url 'add_produto' %}" method="post" enctype="multipart/form-data">
+							{% csrf_token %}
+							{{ form_produto }}
+								<br/>
+							<button type="submit" class="form-control btn-primary">Criar categoria</button>
+						
+							</form>
+
+
+						</div>
+						<!--END SECTIONS PROSUTOS-->
+
 				  </div>
 				</div>
 			</div>

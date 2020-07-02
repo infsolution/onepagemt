@@ -18,8 +18,10 @@ def panel(request):
 	heros = Hero.objects.all()
 	form_aboult = AboultModelForm()
 	form_hero = HeroModelForm()
+	form_categoria = CategoriaModelForm()
+	form_produto = ProdutoModelForm()
 	return render(request, 'onepage/panel.html',{'user':user, 'form_aboult': form_aboult,
-	'form_hero': form_hero, 'heros': heros})
+	'form_hero': form_hero, 'heros': heros, 'form_categoria':form_categoria, 'form_produto': form_produto})
 
 @login_required
 def update(request):
@@ -96,3 +98,15 @@ def add_hero(request, hero_id=0):
 			return redirect('/panel')
 
 
+def add_produto(request):
+	pass
+
+
+
+def categoria(request):
+	if request.method == 'POST':
+		form = CategoriaModelForm(request.POST)
+		if form.is_valid():
+			form.save()
+		return redirect('panel')
+	return redirect('panel')

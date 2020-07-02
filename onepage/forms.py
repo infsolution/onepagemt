@@ -35,3 +35,23 @@ class HeroModelForm(forms.ModelForm):
             'conteudo': Textarea(attrs={'class':'form-control', 'maxlength':550, 'rows':5, 'cols':40}),
             'imagem_de_fundo': forms.FileInput(attrs={'class':'form-control'})
         }
+
+class CategoriaModelForm(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ['nome']
+        widgets = {
+            'nome': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+        }
+
+
+class ProdutoModelForm(forms.ModelForm):
+    class Meta:
+        model = Produto
+        fields = ['nome', 'descricao', 'preco', 'categoria']
+        widgets = {
+            'nome': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'descricao': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'preco': forms.NumberInput(attrs={'class':'form-control', 'maxlength':255}),
+            'categoria':forms.Select(attrs={'class':'form-control'})
+        }

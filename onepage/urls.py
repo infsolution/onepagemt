@@ -10,5 +10,7 @@ urlpatterns = [
     path('aboult', views.add_aboult, name='aboult'),
     path('hero', views.add_hero, name='hero'),
     path('hero/<int:hero_id>', views.add_hero, name='edit_delete_hero'),
+    path('produto/', views.add_produto, name='add_produto'),
+    path('categoria/', views.categoria, name='categoria'),
 
 ]
