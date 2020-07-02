@@ -76,7 +76,7 @@ function show_content(element, text){
 							{{ form_hero }}
 							<button type="submit" class="form-control btn-primary">Criar apresentação</button>
 							</form>
-							<h2>Apresentações</h2>
+<!--TABELA APRESENTAÇÕES--><h2>Apresentações</h2>
 							<table class="table table-houver">
 								<thead>
 									<tr>
@@ -184,11 +184,80 @@ function show_content(element, text){
 							{% csrf_token %}
 							{{ form_produto }}
 								<br/>
-							<button type="submit" class="form-control btn-primary">Criar categoria</button>
+							<button type="submit" class="form-control btn-primary">Criar produto</button>
 						
 							</form>
+<!--TABELA PRODUTOS--><H2>Produtos cadastrados</H2>
+							<table class="table table-houver">
+								<thead>
+									<tr>
+										<th>Nome</th>
+										<th>Categoria</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% if categorias %}
+										{% for categoria in categorias %}
+											{% for produto in categoria.produtos.all  %}
+											<tr>
+												<th>{{produto}}</th>
+												<th>{{produto.categoria}}</th>
 
-
+									<th>
+										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal{{hero.id}}" data-whatever="@getbootstrap">Editar</button>
+																		<!--MODAL EDIT HERO-->
+							<div class="modal fade" id="modal{{hero.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+								  <div class="modal-content">
+									<div class="modal-header">
+									  <h5 class="modal-title" id="exampleModalLabel">Editar apresentação</h5>
+									  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									  </button>
+									</div>
+									<div class="modal-body">
+									  <form action="{% url 'ac_produto' produto.id %}" method="get" enctype="multipart/form-data">
+										{% csrf_token %}
+										<input type="hidden" name="action" value="edit">
+										<div class="form-group">
+										  <label for="recipient-name" class="col-form-label">Titulo:</label>
+										  <input type="text" name="titulo" class="form-control" maxlength="45" value="{{produto.nome}}" required id="id_titulo">
+										</div>
+										<div class="form-group">
+										  <label for="message-text" class="col-form-label">Descrição:</label>
+										  	<textarea name="conteudo" cols="40" rows="5" class="form-control" maxlength="550" required id="id_conteudo">
+												{{produto.descricao}}
+											</textarea>
+										</div>
+										<div class="form-group">
+											<label for="message-text" class="col-form-label">preço:</label>
+											<input type="number" name="preco" class="form-control" maxlength="45" value="{{produto.preco}}" required id="id_preco">
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+											<button type="submit" class="btn btn-primary">Editar</button>
+										  </div>
+									  </form>
+									</div>
+								  </div>
+								</div>
+							  </div>
+							  <!-- END MODAL EDIT HERO-->
+									</th>
+									<th>
+									<form action="{% url 'ac_produto' produto.id %}" method="get">
+													{% csrf_token %}
+										<input type="hidden" name="action" value="delete">
+										<button class="btn btn-danger">Apagar</button>
+									</form>
+									</th>
+									</tr>
+											{% endfor %}
+										{% endfor %}
+									{% endif %}
+								</tbody>
+							</table>
 						</div>
 						<!--END SECTIONS PROSUTOS-->
 
@@ -222,4 +291,17 @@ function show_content(element, text){
     </div>
   </footer>
 
+
 {% endblock %}
+
+
+
+
+
+{% if categorias %}
+	{% for categoria in categorias %}
+		{{categoria.produtos.all.0}}
+	{% endfor %}
+{% endif %}
+
+						
