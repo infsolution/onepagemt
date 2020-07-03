@@ -111,6 +111,13 @@ def add_produto(request, produto_id=0):
 			produto = Produto.objects.get(id=produto_id)
 			produto.delete()
 			return redirect('/panel')
+		if request.GET['action'] == 'edit':
+			produto = Produto.objects.get(id=produto_id)
+			produto.nome = request.GET['nome']
+			produto.descricao = request.GET['descricao']
+			produto.preco = request.GET['preco']
+			produto.save()
+			return redirect('/panel')	
 		return redirect('/panel')
 
 
