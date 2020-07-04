@@ -247,7 +247,7 @@ function show_content(element, text){
 									</th>
 									<th>
 
-										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#delete{{produto.id}}" data-whatever="@getbootstrap">Editar</button>
+										<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete{{produto.id}}" data-whatever="@getbootstrap">Apagar</button>
 																		<!--MODAL EDIT HERO-->
 							<div class="modal fade" id="delete{{produto.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog">
@@ -264,7 +264,7 @@ function show_content(element, text){
 										{% csrf_token %}
 										<input type="hidden" name="action" value="delete">
 										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 											<button type="submit" class="btn btn-primary">Apagar</button>
 										  </div>
 									  </form>

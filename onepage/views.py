@@ -12,7 +12,7 @@ def index(request):
 	heros = Hero.objects.all()
 	datas['heros'] = heros
 	return render(request, 'onepage/index.html', {'datas':datas})
-
+@login_required
 def panel(request):
 	user = User.objects.get(id=request.user.id)
 	heros = Hero.objects.all()
@@ -24,12 +24,6 @@ def panel(request):
 	return render(request, 'onepage/panel.html',{'user':user, 'form_aboult': form_aboult,
 	'form_hero': form_hero, 'heros': heros, 'form_categoria':form_categoria, 
 	'form_produto': form_produto, 'categorias':categorias})
-
-@login_required
-def update(request):
-	if request.method == 'POST':
-		pass
-	return render(request, 'onepage/form.html')
 
 
 def do_login(request):
