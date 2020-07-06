@@ -68,7 +68,7 @@
           <li><a href="#gallery">Galeria</a></li>
           <li><a href="#contact">Contatos</a></li>
 
-          <li class="book-a-table text-center"><a href="#book-a-table">Me cadastrar</a></li>
+          <li class="book-a-table text-center"><a href="#contact">Me cadastrar</a></li>
         </ul>
       </nav><!-- .nav-menu -->
 
@@ -193,7 +193,7 @@
     </section><!-- End About Section -->
 
     <!-- ======= Whu Us Section ======= -->
-    <section id="why-us" class="why-us">
+    <!--section id="why-us" class="why-us">
       <div class="container">
 
         <div class="section-title">
@@ -230,9 +230,9 @@
         </div>
 
       </div>
-    </section><!-- End Whu Us Section -->
+    </section--><!-- End Whu Us Section -->
 
-    <!-- ======= Menu Section ======= -->
+    <!-- ======= SEÇÃO DE PRODUTOS ======= -->
     <section id="menu" class="menu">
       <div class="container">
 
@@ -243,26 +243,32 @@
         <div class="row">
           <div class="col-lg-12 d-flex justify-content-center">
             <ul id="menu-flters">
-              <li data-filter="*" class="filter-active">Show All</li>
-              <li data-filter=".filter-chas">Chas</li>
-              <li data-filter=".filter-salads">Salads</li>
-              <li data-filter=".filter-specialty">Specialty</li>
+              <li data-filter="*" class="filter-active">Todas as categorias</li>
+              {% if datas.categorias %}
+              {% for categoria in datas.categorias %}
+              <li data-filter=".filter-{{categoria}}">{{categoria}}</li>
+              {% endfor %}
+              {% endif %}
             </ul>
           </div>
         </div>
 
         <div class="row menu-container">
-
-          <div class="col-lg-6 menu-item filter-chas">
-            <div class="menu-content">
-              <a href="#">Lobster Bisque</a><span>$5.95</span>
+          {% if datas.categorias %}
+          {% for categoria in datas.categorias %}
+            {% for produto in categoria.produtos.all %}
+            <div class="col-lg-6 menu-item filter-{{produto.categoria}}">
+              <div class="menu-content">
+                <a href="#">{{produto}}</a><span>${{produto.preco}}</span>
+              </div>
+              <div class="menu-ingredients">
+                {{ produto.descricao }}
+              </div>
             </div>
-            <div class="menu-ingredients">
-              Lorem, deren, trataro, filede, nerada
-            </div>
-          </div>
-
-          <div class="col-lg-6 menu-item filter-specialty">
+            {% endfor %}
+          {% endfor %}  
+          {% endif %}
+          <!--div class="col-lg-6 menu-item filter-specialty">
             <div class="menu-content">
               <a href="#">Bread barrel</a><span>$6.95</span>
             </div>
@@ -332,15 +338,15 @@
             <div class="menu-ingredients">
               Plump lobster meat, mayo and crisp lettuce on a toasted bulky roll
             </div>
-          </div>
+          </div-->
 
         </div>
 
       </div>
-    </section><!-- End Menu Section -->
+    </section><!--FIM SEÇÃO DE PRODUTOS -->
 
     <!-- ======= Specials Section ======= -->
-    <section id="specials" class="specials">
+    <!--section id="specials" class="specials">
       <div class="container">
 
         <div class="section-title">
@@ -435,7 +441,7 @@
         </div>
 
       </div>
-    </section><!-- End Specials Section -->
+    </section--><!-- End Specials Section -->
 
     <!-- ======= Events Section ======= -->
     <section id="events" class="events">
@@ -528,7 +534,7 @@
     </section><!-- End Events Section -->
 
     <!-- ======= Book A Table Section ======= -->
-    <section id="book-a-table" class="book-a-table">
+    <!--section id="book-a-table" class="book-a-table">
       <div class="container">
 
         <div class="section-title">
@@ -576,7 +582,7 @@
         </form>
 
       </div>
-    </section><!-- End Book A Table Section -->
+    </section --><!-- End Book A Table Section -->
 
     <!-- ======= Gallery Section ======= -->
     <section id="gallery" class="gallery">
@@ -828,18 +834,18 @@
       <div class="container">
 
         <div class="section-title">
-          <h2><span>Contact</span> Us</h2>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
+          <h2><span>Fale com a gente<span></h2>
+          <p>Deixe sua mensagem com seu email. telefone e nome completo e breve entraremos em contato com mais informações</p>
         </div>
       </div>
 
-      <div class="map">
+      <!--div class="map">
         <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" allowfullscreen></iframe>
-      </div>
+      </div-->
 
       <div class="container mt-5">
 
-        <div class="info-wrap">
+        <!-- div class="info-wrap">
           <div class="row">
             <div class="col-lg-3 col-md-6 info">
               <i class="icofont-google-map"></i>
@@ -865,25 +871,26 @@
               <p>+1 5589 55488 51<br>+1 5589 22475 14</p>
             </div>
           </div>
-        </div>
+        </div -->
 
-        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+        <form action="{% url 'message' %}" method="post" role="form" class="php-email-form">
+          {% csrf_token %}
           <div class="form-row">
             <div class="col-md-6 form-group">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+              <input type="text" name="name" class="form-control" id="name" placeholder="Nome completo" data-rule="minlen:10" data-msg="Por vafor informe seu nome" />
               <div class="validate"></div>
             </div>
             <div class="col-md-6 form-group">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+              <input type="text" class="form-control" name="fone" id="fone" placeholder="Telefone" data-rule="required" data-msg="Por favor, informe um telefone válido" />
               <div class="validate"></div>
             </div>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+            <input type="email" class="form-control" name="email" id="email" placeholder="Email" data-rule="minlen:10" data-msg="Por favor informe um email válido" />
             <div class="validate"></div>
           </div>
           <div class="form-group">
-            <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+            <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Por favor deixe uma mensagem" placeholder="Deixe sua mensagem"></textarea>
             <div class="validate"></div>
           </div>
           <div class="mb-3">
@@ -891,7 +898,7 @@
             <div class="error-message"></div>
             <div class="sent-message">Your message has been sent. Thank you!</div>
           </div>
-          <div class="text-center"><button type="submit">Send Message</button></div>
+          <div class="text-center"><button type="submit">Enviar Mensagem</button></div>
         </form>
 
       </div>

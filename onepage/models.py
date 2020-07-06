@@ -26,7 +26,18 @@ class Produto(models.Model):
 	def __str__(self):
 		return self.nome
 
+class User(models.Model):
+	Name = models.CharField(max_length=255, null=False)
+	telefone = models.CharField(max_length=255, null=False, unique=True)
+	email = models.CharField(max_length=255, null=False, unique=True)
+	created_at = models.DateField(auto_now_add=True)
+	def __str__(self):
+		return self.Name
 
-
-
+class Message(models.Model):
+	user = models.ForeignKey(User, on_delete= models.CASCADE, related_name='messages')
+	text = models.TextField()
+	created_at = models.DateField(auto_now_add=True)
+	def __str__(self):
+		return self.text
 	
