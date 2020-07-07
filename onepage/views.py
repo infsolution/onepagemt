@@ -8,25 +8,31 @@ from .forms import *
 from .models import *
 def index(request):
 	datas = {}
+	user = Perfil.objects.get(id=1)
 	aboult = Aboult.objects.get(id=1)
 	datas['aboult'] = aboult
 	heros = Hero.objects.all()
 	datas['heros'] = heros
 	categorias = Categoria.objects.all()
 	datas['categorias'] = categorias
-	return render(request, 'onepage/index.html', {'datas':datas})
+	return render(request, 'onepage/index.html', {'datas':datas, 'user':user})
 @login_required
 def panel(request):
 	user = User.objects.get(id=request.user.id)
+	perfil = Perfil.objects.get(id=1)
 	heros = Hero.objects.all()
 	categorias = Categoria.objects.all()
+	users = User.objects.all()#.exclude(id=request.user.id)
 	form_aboult = AboultModelForm()
 	form_hero = HeroModelForm()
 	form_categoria = CategoriaModelForm()
 	form_produto = ProdutoModelForm()
+	form_perfil = PefilModelForm(instance=perfil)
+
 	return render(request, 'onepage/panel.html',{'user':user, 'form_aboult': form_aboult,
 	'form_hero': form_hero, 'heros': heros, 'form_categoria':form_categoria, 
-	'form_produto': form_produto, 'categorias':categorias})
+	'form_produto': form_produto, 'categorias':categorias, 'users':users,
+	'form_perfil':form_perfil, 'perfil': perfil})
 
 
 def do_login(request):
@@ -122,8 +128,8 @@ def categoria(request):
 		form = CategoriaModelForm(request.POST)
 		if form.is_valid():
 			form.save()
-		return redirect('panel')
-	return redirect('panel')
+		return redirect('/panel')
+	return redirect('/panel')
 
 
 def message(request):
@@ -134,11 +140,46 @@ def message(request):
 			new_user.save()
 			message = Message(user=new_user, text=request.POST['message'])
 			message.save()
+			return HttpResponse("<p>Obrigado por sua mensagem "+new_user.Name+"! Em breve entraremos em contanto.</p>")
 			
 		else:
 			message = Message(user=user, text=request.POST['message'])
 			message.save()
-		return HttpResponse("<p>Obrigado por sua mensagem "+user.Name+"! Em breve entraremos em contanto.</p>")
+			return HttpResponse("<p>Obrigado por sua mensagem "+user.Name+"! Em breve entraremos em contanto.</p>")
 	else:
 		return HttpResponse("<p>Methodo não permitido!</p>")
 		
+def perfil(request, perfil_id=0):
+	if request.method == 'POST':
+		try:
+			if request.POST['action']:
+				print("ENTROU NO IF DO EDITE")
+				perfil = Perfil.objects.get(id=perfil_id)
+				print(perfil)
+				perfil.titulo = request.POST['titulo']
+				perfil.descricao = request.POST['descricao']
+				perfil.nome = request.POST['nome']
+				perfil.cargo = request.POST['cargo']
+				perfil.facebook = request.POST['facebook']
+				perfil.twitter = request.POST['twitter']
+				perfil.linkedin = request.POST['linkedin']
+				perfil.instagran = request.POST['instagran']
+				url = ''
+				if request.FILES:
+					url = save_image(request, 'foto')
+					perfil.foto = url
+				perfil.save()
+				print("\n\n")
+				print(perfil)
+				return redirect('/panel')
+		except Exception as identifier:
+			form = PefilModelForm(request.POST)
+			if form.is_valid():
+				model = form.save(commit=False)
+				url = ''
+				if request.FILES:
+					url = save_image(request, 'foto')
+				perfil = Perfil(titulo=model.titulo, descricao=model.descricao, nome=model.nome, cargo=model.cargo,
+				facebook=model.facebook, twitter=model.twitter, linkedin=model.linkedin, instagran=model.instagran, foto=url)
+				perfil.save()
+				return redirect('/panel')

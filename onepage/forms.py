@@ -55,3 +55,18 @@ class ProdutoModelForm(forms.ModelForm):
             'preco': forms.NumberInput(attrs={'class':'form-control', 'maxlength':255}),
             'categoria':forms.Select(attrs={'class':'form-control'})
         }
+class PefilModelForm(forms.ModelForm):
+    class Meta:
+        model = Perfil
+        fields = ['id','titulo', 'descricao', 'nome', 'cargo', 'facebook', 'twitter', 'linkedin', 'instagran', 'foto']
+        widgets = {
+            'titulo': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'descricao': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'nome': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'cargo': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'facebook': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'twitter': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'linkedin': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'instagran': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'foto': forms.FileInput(attrs={'class':'form-control'}),
+        }

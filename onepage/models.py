@@ -40,4 +40,15 @@ class Message(models.Model):
 	created_at = models.DateField(auto_now_add=True)
 	def __str__(self):
 		return self.text
-	
+class Perfil(models.Model):
+	titulo = models.CharField(max_length=155, null=False)
+	descricao = models.CharField(max_length=255, null=False)
+	nome = models.CharField(max_length=255, null=False)
+	cargo = models.CharField(max_length=55, null=False)
+	facebook = models.CharField(max_length=255, null=False)
+	twitter = models.CharField(max_length=255, null=False)
+	linkedin = models.CharField(max_length=255, null=False)
+	instagran = models.CharField(max_length=255, null=False)
+	foto = models.ImageField(blank=True, null=True, upload_to='media/')
+	def __str__(self):
+		return self.nome

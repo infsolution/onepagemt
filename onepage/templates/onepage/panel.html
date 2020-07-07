@@ -41,277 +41,331 @@ function show_content(element, text){
 	</nav>
 
 	<main id="main">
-			<div class="row">
-			  	<div class="col-md-2">
-			  		<ul class="sidenav">
-				        <li onclick="show_content('show','aboult')">Sobre nós</li>
-						<li onclick="show_content('show','hero')">Apresentação</li>
-						<li onclick="show_content('show','produto')">Produtos</li>
-				        <li onclick="show_content('show','ressultados')">Reseultados</li>
-				        <li onclick="show_content('show','author')">Leni</li>
-				        <li onclick="show_content('show','galeria')">Galeria</li>
-				        <li onclick="show_content('show','contatos')">Contatos</li>
-        			</ul>
-        		</div>
-			  	<div class="col-md-10">
-					<div class="container">
-						{% if error %}
-							{{ error }}
-						{% endif %}
-			  			<dir id="show" style="display: block"></dir>
+		<div class="row">
+			<div class="col-md-2">
+				<ul class="sidenav">
+					<li onclick="show_content('show','aboult')">Sobre nós</li>
+					<li onclick="show_content('show','hero')">Apresentação</li>
+					<li onclick="show_content('show','produto')">Produtos</li>
+					<li onclick="show_content('show','ressultados')">Reseultados</li>
+					<li onclick="show_content('show','perfil')">Leni</li>
+					<li onclick="show_content('show','galeria')">Galeria</li>
+					<li onclick="show_content('show','contatos')">Contatos</li>
+				</ul>
+			</div>
+			<div class="col-md-10">
+				<div class="container">
+					{% if error %}
+						{{ error }}
+					{% endif %}
+					<dir id="show" style="display: block"></dir>
 
-						<div id="aboult" style="display: none;">
-							<h2>Atualização da Seção Sobre nós</h2>
-							<form action="{% url 'aboult' %}" method="post" enctype="multipart/form-data">
-							{% csrf_token %}
-							{{ form_aboult }}
-							<button type="submit" class="form-control btn-primary">Criar aboult</button>
-							</form>
-						</div>
+					<div id="aboult" style="display: none;">
+						<h2>Atualização da Seção Sobre nós</h2>
+						<form action="{% url 'aboult' %}" method="post" enctype="multipart/form-data">
+						{% csrf_token %}
+						{{ form_aboult }}
+						<button type="submit" class="form-control btn-primary">Criar aboult</button>
+						</form>
+					</div>
 
-						<div id="hero" style="display: none;">
-							<h2>Criar Apresentação</h2>
-							<form action="{% url 'hero' %}" method="post" enctype="multipart/form-data">
-							{% csrf_token %}
-							{{ form_hero }}
-							<button type="submit" class="form-control btn-primary">Criar apresentação</button>
-							</form>
+					<div id="hero" style="display: none;">
+						<h2>Criar Apresentação</h2>
+						<form action="{% url 'hero' %}" method="post" enctype="multipart/form-data">
+						{% csrf_token %}
+						{{ form_hero }}
+						<button type="submit" class="form-control btn-primary">Criar apresentação</button>
+						</form>
 <!--TABELA APRESENTAÇÕES--><h2>Apresentações</h2>
-							<table class="table table-houver">
-								<thead>
-									<tr>
-										<th>Titulo</th>
-										<th></th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									
-									{% if heros %}
-									{% for hero in heros %}
-									<tr>
-										<th>{{hero.titulo}}</th>
-										<th>
-											<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal{{hero.id}}" data-whatever="@getbootstrap">Editar</button>
-																		<!--MODAL EDIT HERO-->
-							<div class="modal fade" id="modal{{hero.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
-								  <div class="modal-content">
-									<div class="modal-header">
-									  <h5 class="modal-title" id="exampleModalLabel">Editar apresentação</h5>
-									  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									  </button>
-									</div>
-									<div class="modal-body">
-									  <form action="{% url 'edit_delete_hero' hero.id %}" method="post" enctype="multipart/form-data">
-										{% csrf_token %}
-										<input type="hidden" name="action" value="edit">
-										<div class="form-group">
-										  <label for="recipient-name" class="col-form-label">Titulo:</label>
-										  <input type="text" name="titulo" class="form-control" maxlength="45" value="{{hero.titulo}}" required id="id_titulo">
-										</div>
-										<div class="form-group">
-										  <label for="message-text" class="col-form-label">Conteúto:</label>
-										  	<textarea name="conteudo" cols="40" rows="5" class="form-control" maxlength="550" required id="id_conteudo">
-												{{hero.conteudo}}
-											</textarea>
-										</div>
-										<div class="form-group">
-											<label for="message-text" class="col-form-label">Imagem de fundo:</label>
-											<input type="file" name="imagem_de_fundo" class="form-control" accept="image/*" id="id_imagem_de_fundo">
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-											<button type="submit" class="btn btn-primary">Editar</button>
-										  </div>
-									  </form>
-									</div>
-								  </div>
+						<table class="table table-houver">
+							<thead>
+								<tr>
+									<th>Titulo</th>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+								{% if heros %}
+								{% for hero in heros %}
+								<tr>
+									<th>{{hero.titulo}}</th>
+									<th>
+										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal{{hero.id}}" data-whatever="@getbootstrap">Editar</button>
+																	<!--MODAL EDIT HERO-->
+						<div class="modal fade" id="modal{{hero.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Editar apresentação</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+									</button>
 								</div>
-							  </div>
-							  <!-- END MODAL EDIT HERO-->
-										</th>
-										<th>
+								<div class="modal-body">
+									<form action="{% url 'edit_delete_hero' hero.id %}" method="post" enctype="multipart/form-data">
+									{% csrf_token %}
+									<input type="hidden" name="action" value="edit">
+									<div class="form-group">
+										<label for="recipient-name" class="col-form-label">Titulo:</label>
+										<input type="text" name="titulo" class="form-control" maxlength="45" value="{{hero.titulo}}" required id="id_titulo">
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-form-label">Conteúto:</label>
+										<textarea name="conteudo" cols="40" rows="5" class="form-control" maxlength="550" required id="id_conteudo">
+											{{hero.conteudo}}
+										</textarea>
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-form-label">Imagem de fundo:</label>
+										<input type="file" name="imagem_de_fundo" class="form-control" accept="image/*" id="id_imagem_de_fundo">
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+										<button type="submit" class="btn btn-primary">Editar</button>
+										</div>
+									</form>
+								</div>
+								</div>
+							</div>
+							</div>
+							<!-- END MODAL EDIT HERO-->
+									</th>
+									<th>
 
-											<!--MODAL APAGRA APRESENTAÇÃO-->
-											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#del_hero{{hero.id}}" data-whatever="@getbootstrap">Apagar</button>
-																		
-												<div class="modal fade" id="del_hero{{hero.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-													<div class="modal-dialog">
-													<div class="modal-content">
-														<div class="modal-header">
-														<h5 class="modal-title" id="exampleModalLabel">Atenção</h5>
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-														</div>
-														<div class="modal-body">
-															<p>Esta ação não pode ser desefeita...</p>
-														<form action="{% url 'edit_delete_hero' hero.id %}" method="get" enctype="multipart/form-data">
-															{% csrf_token %}
-															<input type="hidden" name="action" value="delete">
-															<div class="modal-footer">
-																<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-																<button type="submit" class="btn btn-primary">Apagar</button>
-															</div>
-														</form>
-														</div>
+										<!--MODAL APAGRA APRESENTAÇÃO-->
+										<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#del_hero{{hero.id}}" data-whatever="@getbootstrap">Apagar</button>
+																	
+											<div class="modal fade" id="del_hero{{hero.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">Atenção</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
 													</div>
+													<div class="modal-body">
+														<p>Esta ação não pode ser desefeita...</p>
+													<form action="{% url 'edit_delete_hero' hero.id %}" method="get" enctype="multipart/form-data">
+														{% csrf_token %}
+														<input type="hidden" name="action" value="delete">
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+															<button type="submit" class="btn btn-primary">Apagar</button>
+														</div>
+													</form>
 													</div>
 												</div>
+												</div>
+											</div>
 
-											<!--END MODAL APAGRA APRESENTAÇÃO-->
+										<!--END MODAL APAGRA APRESENTAÇÃO-->
 
 
-										</th>
-									</tr>	
+									</th>
+								</tr>	
+								{% endfor %}
+							{% endif %}
+							</tbody>
+
+						</table>
+
+					</div>
+					<!--SECTIONS PRODUTOS-->
+					<div id="produto" style="display: none;">
+						<div class="row">
+							<div class="col-md-9"><h2>Cadastor de produtos e categorias</h2></div>
+							<div class="col-md-3">
+								<!--MODAL CATEGORIA-->
+								<button type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#modalCategoria" data-whatever="@getbootstrap">Cadastrar Categoria</button>
+								<div class="modal fade" id="modalCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Cadastrar categoria</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<form action="{% url 'categoria' %}" method="post" enctype="multipart/form-data">
+											{% csrf_token %}
+											{{ form_categoria}}
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+												<button type="submit" class="btn btn-primary">Cadastrar</button>
+												</div>
+											</form>
+										</div>
+										</div>
+									</div>
+									</div>
+									<!-- END MODAL CATEGORIA-->
+							</div>
+						
+						</div>
+						<form action="{% url 'add_produto' %}" method="post" enctype="multipart/form-data">
+						{% csrf_token %}
+						{{ form_produto }}
+							<br/>
+						<button type="submit" class="form-control btn-primary">Criar produto</button>
+					
+						</form>
+<!--TABELA PRODUTOS--><H2>Produtos cadastrados</H2>
+						<table class="table table-houver">
+							<thead>
+								<tr>
+									<th>Nome</th>
+									<th>Categoria</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if categorias %}
+									{% for categoria in categorias %}
+										{% for produto in categoria.produtos.all  %}
+										<tr>
+											<th>{{produto}}</th>
+											<th>{{produto.categoria}}</th>
+
+								<th>
+									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal{{produto.id}}" data-whatever="@getbootstrap">Editar</button>
+																	<!--MODAL EDIT HERO-->
+						<div class="modal fade" id="modal{{produto.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Editar produto</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form action="{% url 'ac_produto' produto.id %}" method="get" enctype="multipart/form-data">
+									{% csrf_token %}
+									<input type="hidden" name="action" value="edit">
+									<div class="form-group">
+										<label for="recipient-name" class="col-form-label">Titulo:</label>
+										<input type="text" name="nome" class="form-control" maxlength="45" value="{{produto.nome}}" required id="id_titulo">
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-form-label">Descrição:</label>
+										<textarea name="descricao" cols="40" rows="5" class="form-control" maxlength="550" required id="id_conteudo">
+											{{produto.descricao}}
+										</textarea>
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-form-label">preço:</label>
+										<input type="number" name="preco" class="form-control"  step="0.01" value="{{produto.preco}}" required id="id_preco">
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+										<button type="submit" class="btn btn-primary">Editar</button>
+										</div>
+									</form>
+								</div>
+								</div>
+							</div>
+							</div>
+							<!-- END MODAL EDIT HERO-->
+								</th>
+								<th>
+									<!--MODAL APAGAR HERO-->
+									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete{{produto.id}}" data-whatever="@getbootstrap">Apagar</button>
+																	
+											<div class="modal fade" id="delete{{produto.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">Atenção</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+													</div>
+													<div class="modal-body">
+														<p>Esta ação não pode ser desefeita...</p>
+													<form action="{% url 'ac_produto' produto.id %}" method="get" enctype="multipart/form-data">
+														{% csrf_token %}
+														<input type="hidden" name="action" value="delete">
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+															<button type="submit" class="btn btn-primary">Apagar</button>
+														</div>
+													</form>
+													</div>
+												</div>
+												</div>
+											</div>
+								</th>
+								</tr>
+										{% endfor %}
 									{% endfor %}
 								{% endif %}
-								</tbody>
+							</tbody>
+						</table>
+					</div>
+					<!--END SECTIONS PROSUTOS-->
 
-							</table>
+					<!--SECTION CONTACTS-->
+					<div id="contatos" style="display: none;">
+						<table class="table table-houver">
+							<thead>
+								<tr>
+									<th>Nome</th>
+									<th>Telefone</th>
+									<th>Email</th>
+									<th>Mensagem</th>
+								</tr>
+							</thead>
+							<tbody>
+							{% if users %}
+							{% for user in users %}
+								{% for message in user.messages.all %}
+								<tr>
+									<th>{{ message.user }}</th>
+									<th>{{ message.user.telefone }}</th>
+									<th>{{ message.user.email }}</th>
+									<th>{{ message }}</th>
+								</tr>
+								{% endfor %}
+							{% endfor %}	
+							{% endif %}
+							</tbody>
+						</table >
+					</div>
+					<!--END SECTION CONTACTS-->	 
 
-						</div>
-						<!--SECTIONS PRODUTOS-->
-						<div id="produto" style="display: none;">
-							<div class="row">
-								<div class="col-md-9"><h2>Cadastor de produtos e categorias</h2></div>
-								<div class="col-md-3">
-									<!--MODAL CATEGORIA-->
-									<button type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#modalCategoria" data-whatever="@getbootstrap">Cadastrar Categoria</button>
-									<div class="modal fade" id="modalCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-										<div class="modal-dialog">
-										  <div class="modal-content">
-											<div class="modal-header">
-											  <h5 class="modal-title" id="exampleModalLabel">Cadastrar categoria</h5>
-											  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											  </button>
-											</div>
-											<div class="modal-body">
-											  <form action="{% url 'categoria' %}" method="post" enctype="multipart/form-data">
-												{% csrf_token %}
-												{{ form_categoria}}
-												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-													<button type="submit" class="btn btn-primary">Cadastrar</button>
-												  </div>
-											  </form>
-											</div>
-										  </div>
-										</div>
-									  </div>
-									  <!-- END MODAL CATEGORIA-->
-								</div>
-							
-							</div>
-							<form action="{% url 'add_produto' %}" method="post" enctype="multipart/form-data">
+					<!--SECTION PERFIL-->
+					<div id="perfil" style="display: none;">
+						<h3>Cadastro de perfil</h3>
+						{% if perfil %}
+						<form action="{% url 'perfil_edit' 1 %}" method="post" enctype="multipart/form-data">
 							{% csrf_token %}
-							{{ form_produto }}
-								<br/>
-							<button type="submit" class="form-control btn-primary">Criar produto</button>
+							<input type="hidden" name="action"  value="edit">
+							{{ form_perfil }}
+							<br/>
+							<button type="submit" class="form-control btn btn-primary">Editar</button>
+						</form>
+
+						{% else %}
+						<form action="{% url 'perfil' %}" method="post" enctype="multipart/form-data">
+							{% csrf_token %}
+							{{ form_perfil }}
+							<br/>
+							<button type="submit" class="form-control btn btn-primary">Cadastrar</button>
+						</form>
+
+						{% endif %}
 						
-							</form>
-<!--TABELA PRODUTOS--><H2>Produtos cadastrados</H2>
-							<table class="table table-houver">
-								<thead>
-									<tr>
-										<th>Nome</th>
-										<th>Categoria</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									{% if categorias %}
-										{% for categoria in categorias %}
-											{% for produto in categoria.produtos.all  %}
-											<tr>
-												<th>{{produto}}</th>
-												<th>{{produto.categoria}}</th>
+					</div>
+					<!--END SECTION PERFIL-->
 
-									<th>
-										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal{{produto.id}}" data-whatever="@getbootstrap">Editar</button>
-																		<!--MODAL EDIT HERO-->
-							<div class="modal fade" id="modal{{produto.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
-								  <div class="modal-content">
-									<div class="modal-header">
-									  <h5 class="modal-title" id="exampleModalLabel">Editar produto</h5>
-									  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									  </button>
-									</div>
-									<div class="modal-body">
-									  <form action="{% url 'ac_produto' produto.id %}" method="get" enctype="multipart/form-data">
-										{% csrf_token %}
-										<input type="hidden" name="action" value="edit">
-										<div class="form-group">
-										  <label for="recipient-name" class="col-form-label">Titulo:</label>
-										  <input type="text" name="nome" class="form-control" maxlength="45" value="{{produto.nome}}" required id="id_titulo">
-										</div>
-										<div class="form-group">
-										  <label for="message-text" class="col-form-label">Descrição:</label>
-										  	<textarea name="descricao" cols="40" rows="5" class="form-control" maxlength="550" required id="id_conteudo">
-												{{produto.descricao}}
-											</textarea>
-										</div>
-										<div class="form-group">
-											<label for="message-text" class="col-form-label">preço:</label>
-											<input type="number" name="preco" class="form-control"  step="0.01" value="{{produto.preco}}" required id="id_preco">
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-											<button type="submit" class="btn btn-primary">Editar</button>
-										  </div>
-									  </form>
-									</div>
-								  </div>
-								</div>
-							  </div>
-							  <!-- END MODAL EDIT HERO-->
-									</th>
-									<th>
-										<!--MODAL APAGAR HERO-->
-										<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete{{produto.id}}" data-whatever="@getbootstrap">Apagar</button>
-																		
-												<div class="modal fade" id="delete{{produto.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-													<div class="modal-dialog">
-													<div class="modal-content">
-														<div class="modal-header">
-														<h5 class="modal-title" id="exampleModalLabel">Atenção</h5>
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-														</div>
-														<div class="modal-body">
-															<p>Esta ação não pode ser desefeita...</p>
-														<form action="{% url 'ac_produto' produto.id %}" method="get" enctype="multipart/form-data">
-															{% csrf_token %}
-															<input type="hidden" name="action" value="delete">
-															<div class="modal-footer">
-																<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-																<button type="submit" class="btn btn-primary">Apagar</button>
-															</div>
-														</form>
-														</div>
-													</div>
-													</div>
-												</div>
-									</th>
-									</tr>
-											{% endfor %}
-										{% endfor %}
-									{% endif %}
-								</tbody>
-							</table>
-						</div>
-						<!--END SECTIONS PROSUTOS-->
-
-				  </div>
 				</div>
 			</div>
-		</section>	  
+		</div>
+		 
 	</main>	
 
 	<footer id="footer">

@@ -13,5 +13,7 @@ urlpatterns = [
     path('produto/<int:produto_id>/', views.add_produto, name='ac_produto'),
     path('categoria/', views.categoria, name='categoria'),
     path('message/', views.message, name='message'),
+    path('perfil/', views.perfil, name='perfil'),
+    path('perfil/<int:perfil_id>/', views.perfil, name='perfil_edit'),
 
 ]

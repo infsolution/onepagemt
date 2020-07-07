@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Emagrecendo com Chá- recrutamento</title>
+  <title>Emagrecendo com Chá - Recrutamento</title>
   <meta content="" name="descriptison">
   <meta content="" name="keywords">
 
@@ -669,29 +669,29 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Our Proffesional <span>Chefs</span></h2>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
+          <h2>{{ user.titulo }} <span></span></h2>
+          <p>{{ user.descricao }}</p>
         </div>
 
         <div class="row">
 
-          <div class="col-lg-4 col-md-6">
+          <div class="col-lg-12 col-md-12">
             <div class="member">
-              <div class="pic"><img src="assets/img/chefs/chefs-1.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="{{ user.foto }}" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Master Chef</span>
+                <h4>{{user}}</h4>
+                <span>{{user.cargo}}</span>
                 <div class="social">
-                  <a href=""><i class="icofont-twitter"></i></a>
-                  <a href=""><i class="icofont-facebook"></i></a>
-                  <a href=""><i class="icofont-instagram"></i></a>
-                  <a href=""><i class="icofont-linkedin"></i></a>
+                  <a href="{{ user.twitter }}"><i class="icofont-twitter"></i></a>
+                  <a href="{{ user.facebook }}"><i class="icofont-facebook"></i></a>
+                  <a href="{{ user.instagran }}"><i class="icofont-instagram"></i></a>
+                  <a href="{{ user.linkedin }}"><i class="icofont-linkedin"></i></a>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6">
+          <!-- div class="col-lg-4 col-md-6">
             <div class="member">
               <div class="pic"><img src="assets/img/chefs/chefs-2.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
@@ -721,7 +721,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div-->
 
         </div>
 
@@ -845,33 +845,31 @@
 
       <div class="container mt-5">
 
-        <!-- div class="info-wrap">
+        <div class="info-wrap">
           <div class="row">
-            <div class="col-lg-3 col-md-6 info">
+            <!-- div class="col-lg-3 col-md-6 info">
               <i class="icofont-google-map"></i>
               <h4>Location:</h4>
               <p>A108 Adam Street<br>New York, NY 535022</p>
-            </div>
+            </ di-->
 
             <div class="col-lg-3 col-md-6 info mt-4 mt-lg-0">
-              <i class="icofont-clock-time icofont-rotate-90"></i>
-              <h4>Open Hours:</h4>
-              <p>Monday-Saturday:<br>11:00 AM - 2300 PM</p>
+              <button class="filter-active" type="submit">Enviar Mensagem</button>
             </div>
 
             <div class="col-lg-3 col-md-6 info mt-4 mt-lg-0">
               <i class="icofont-envelope"></i>
               <h4>Email:</h4>
-              <p>info@example.com<br>contact@example.com</p>
+              <p>info@example.com<!--br>contact@example.com--></p>
             </div>
 
             <div class="col-lg-3 col-md-6 info mt-4 mt-lg-0">
               <i class="icofont-phone"></i>
-              <h4>Call:</h4>
-              <p>+1 5589 55488 51<br>+1 5589 22475 14</p>
+              <h4>Fone(Whatsapp):</h4>
+              <p>+1 5589 55488 51<!--br>+1 5589 22475 14--></p>
             </div>
           </div>
-        </div -->
+        </div>
 
         <form action="{% url 'message' %}" method="post" role="form" class="php-email-form">
           {% csrf_token %}
@@ -909,8 +907,8 @@
   <!-- ======= Footer ======= -->
   <footer id="footer">
     <div class="container">
-      <h3>Delicious</h3>
-      <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
+      <h3>Recrutamento Maravilhas da Terra</h3>
+      <p>Entre para nossa equipe e tenha ótimos lucros.</p>
       <div class="social-links">
         <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
         <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
