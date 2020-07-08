@@ -6,6 +6,8 @@ class Aboult(models.Model):
 	content = models.TextField()
 	url_video = models.CharField(max_length=255)
 	capa_video = models.ImageField(blank=True, null=True, upload_to='media/')
+	class Meta:
+		ordering = ('-id',)
 
 class Hero(models.Model):
 	titulo = models.CharField(max_length=45, null=False)

@@ -9,7 +9,7 @@ from .models import *
 def index(request):
 	datas = {}
 	user = Perfil.objects.get(id=1)
-	aboult = Aboult.objects.get(id=1)
+	aboult = Aboult.objects.all().first()
 	datas['aboult'] = aboult
 	heros = Hero.objects.all()
 	datas['heros'] = heros
