@@ -54,3 +54,18 @@ class Perfil(models.Model):
 	foto = models.ImageField(blank=True, null=True, upload_to='media/')
 	def __str__(self):
 		return self.nome
+
+class Testimonial(models.Model):
+	nome_cliente = models.CharField(max_length=155, null=False)
+	profissao = models.CharField(max_length=155, null=False)
+	declaracao = models.TextField(null=False)
+	foto = models.ImageField(blank=True, null=True, upload_to='media/')
+	def __str__(self):
+		return self.nome_cliente
+	class Meta:
+		ordering = ('-id',)
+
+class ImageTestimonial(models.Model):
+	foto = models.ImageField(blank=True, null=True, upload_to='media/')
+	class Meta:
+		ordering = ('-id',)

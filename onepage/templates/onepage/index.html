@@ -35,6 +35,12 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style type="text/css">
+    .testimonials{
+      background: url("{{datas.image_testimonial.foto}}") no-repeat;
+    }
+    
+  </style>
 </head>
 
 <body>
@@ -43,7 +49,7 @@
   <section id="topbar" class="d-none d-lg-flex align-items-center fixed-top topbar-transparent">
     <div class="container text-right">
       <i class="icofont-phone"></i> (86) 99491-2272
-      <i class="icofont-clock-time icofont-rotate-180"></i> Mon-Sat: 11:00 AM - 23:00 PM
+      <i class="icofont-clock-time icofont-rotate-180"></i> ppppp
     </div>
   </section>
 
@@ -65,7 +71,7 @@
           <!--li><a href="#specials">Specials</a></li-->
           <!--li><a href="#events">Resultados</a></li-->
           <li><a href="#chefs">Leni</a></li>
-          <!--li><a href="#gallery">Galeria</a></li-->
+          <!--li><a href="#gallery"></a></li-->
           <li><a href="#contact">Contatos</a></li>
 
           <li class="book-a-table text-center"><a href="#contact">Me cadastrar</a></li>
@@ -76,6 +82,7 @@
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
+  
   <section id="hero">
     <div class="hero-container">
       <div id="heroCarousel" class="carousel slide carousel-fade" data-ride="carousel">
@@ -98,7 +105,7 @@
                 <p class="animate__animated animate__fadeInUp">{{hero.conteudo}}</p>
                 <div>
                   <a href="#menu" class="btn-menu animate__animated animate__fadeInUp scrollto">Nossos Produtos</a>
-                  <a href="#book-a-table" class="btn-book animate__animated animate__fadeInUp scrollto">Me Cadastrar</a>
+                  <a href="#contact" class="btn-book animate__animated animate__fadeInUp scrollto">Me Cadastrar</a>
                 </div>
               </div>
             </div>
@@ -729,15 +736,15 @@
     </section><!-- End Chefs Section -->
 
     <!-- ======= Testimonials Section ======= -->
-    <!-- section id="testimonials" class="testimonials">
+    <section id="testimonials" class="testimonials">
       <div class="container">
-
         <div class="owl-carousel testimonials-carousel">
-
+        {% if datas.testimonials %}  
+          {% for testimonial in datas.testimonials %}
           <div class="testimonial-item">
-            <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-            <h3>Saul Goodman</h3>
-            <h4>Ceo &amp; Founder</h4>
+            <img src="{{testimonial.foto}}" class="testimonial-img" alt="">
+            <h3>{{testimonial.nome_cliente}}</h3>
+            <h4>{{ testimonial.profissao }}</h4>
             <div class="stars">
               <i class="icofont-star"></i>
               <i class="icofont-star"></i>
@@ -747,12 +754,14 @@
             </div>
             <p>
               <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+              {{ testimonial.declaracao }}
               <i class="bx bxs-quote-alt-right quote-icon-right"></i>
             </p>
           </div>
+            {% endfor %}
+          {% endif %}
 
-          <div class="testimonial-item">
+          <!--div class="testimonial-item">
             <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
             <h3>Sara Wilsson</h3>
             <h4>Designer</h4>
@@ -822,12 +831,12 @@
               Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
               <i class="bx bxs-quote-alt-right quote-icon-right"></i>
             </p>
-          </div>
+          </div-->
 
         </div>
 
       </div>
-    </sectio--><!-- End Testimonials Section -->
+    </section><!-- End Testimonials Section -->
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">

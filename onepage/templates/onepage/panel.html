@@ -47,7 +47,7 @@ function show_content(element, text){
 					<li onclick="show_content('show','aboult')">Sobre nós</li>
 					<li onclick="show_content('show','hero')">Apresentação</li>
 					<li onclick="show_content('show','produto')">Produtos</li>
-					<!--li onclick="show_content('show','ressultados')">Reseultados</li-->
+					<li onclick="show_content('show','testimonial')">Declarações</li>
 					<li onclick="show_content('show','perfil')">Leni</li>
 					<!--li onclick="show_content('show','galeria')">Galeria</li-->
 					<li onclick="show_content('show','contatos')">Contatos</li>
@@ -361,6 +361,147 @@ function show_content(element, text){
 						
 					</div>
 					<!--END SECTION PERFIL-->
+					<!--SECTION TESTIMONIAL-->
+					
+					<div id="testimonial" style="display: none;" >
+						<div class="row">
+							<div class="col-md-6">
+								<h3>Declarações</h3>
+							</div>
+							<div class="col-md-6">
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#imageTestimonial" data-whatever="@getbootstrap">Imagem de fundo</button>
+																	
+								<div class="modal fade" id="imageTestimonial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Atenção</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										</div>
+										<div class="modal-body">
+											<p>Cadastre uma imagem de fundo</p>
+										<form action="{% url 'image' %}" method="post" enctype="multipart/form-data">
+											{% csrf_token %}
+											<div class="form-group">
+												<label for="message-text" class="col-form-label">Foto:</label>
+												<input type="file" name="foto" class="form-control" accept="image/*" id="id_foto">
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+												<button type="submit" class="btn btn-primary">Salvar</button>
+											</div>
+										</form>
+										</div>
+									</div>
+									</div>
+								</div>
+							</div >
+						</div >
+						
+						
+						<form action="{% url 'testimonial' %}" method="post" enctype="multipart/form-data">
+							{% csrf_token %}
+							{{ form_testimonial }}
+							<br/>
+							<button type="submit" class="form-control btn btn-primary">Cadastrar</button>
+						</form>
+						
+						<h2>Declarações cadastradas</h2>
+						<table class="table table-houver">
+							<thead>
+								<tr>
+									<th>Nome</th>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if testimonials %}
+								{% for testimonial in testimonials %}
+								<tr>
+									<th>{{testimonial.nome_cliente}}</th>
+									<th>
+										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#editTest{{testimonial.id}}" data-whatever="@getbootstrap">Editar</button>
+																	
+										<div class="modal fade" id="editTest{{testimonial.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">Editar Depoimento</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<form action="{% url 'del_edi_test' testimonial.id %}" method="post" enctype="multipart/form-data">
+													{% csrf_token %}
+													<input type="hidden" name="action" value="edit">
+													<div class="form-group">
+														<label for="recipient-name" class="col-form-label">Nome do Cliente:</label>
+														<input type="text" name="nome_cliente" class="form-control" maxlength="155" value="{{testimonial.nome_cliente}}" required id="id_titulo">
+													</div>
+													<div class="form-group">
+														<label for="recipient-name" class="col-form-label">Profissão:</label>
+														<input type="text" name="profissao" class="form-control" maxlength="155" value="{{testimonial.profissao}}" required id="id_profissao">
+													</div>
+													<div class="form-group">
+														<label for="message-text" class="col-form-label">Declaração:</label>
+														<textarea name="declaracao" cols="40" rows="5" class="form-control" maxlength="550" required id="id_declaracao">
+															{{testimonial.declaracao}}
+														</textarea>
+													</div>
+													<div class="form-group">
+														<label for="message-text" class="col-form-label">Foto:</label>
+														<input type="file" name="foto" class="form-control" accept="image/*" id="id_foto">
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+														<button type="submit" class="btn btn-primary">Editar</button>
+														</div>
+													</form>
+												</div>
+												</div>
+											</div>
+											</div>
+									</th>
+									<th>
+										<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTest{{testimonial.id}}" data-whatever="@getbootstrap">Apagar</button>
+																	
+											<div class="modal fade" id="delTest{{testimonial.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">Atenção</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+													</div>
+													<div class="modal-body">
+														<p>Esta ação não pode ser desefeita...</p>
+													<form action="{% url 'del_edi_test' testimonial.id %}" method="post" enctype="multipart/form-data">
+														{% csrf_token %}
+														<input type="hidden" name="action" value="delete">
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+															<button type="submit" class="btn btn-primary">Apagar</button>
+														</div>
+													</form>
+													</div>
+												</div>
+												</div>
+											</div>
+									</th>
+								</tr>
+								{% endfor %}
+								{% endif %}
+							</tbody>
+						</table >
+
+					</div >
+					
+					<!--END SECTION TESTIMONIAL-->
 
 				</div>
 			</div>
@@ -368,7 +509,7 @@ function show_content(element, text){
 		 
 	</main>	
 
-	<footer id="footer">
+	<!--footer id="footer">
     <div class="container">
       <h3>Emagrecendo com chá</h3>
       <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
@@ -376,21 +517,21 @@ function show_content(element, text){
         <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
         <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
         <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-        <!--a href="#" class="google-plus"><i class="bx bxl-skype"></i></a -->
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
         <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
       </div>
       <div class="copyright">
         &copy; Copyright <strong><span>Emagrecendo com Chá</span></strong>. Todos os direitos reservados
       </div>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/delicious-free-restaurant-bootstrap-theme/ -->
+        <All the links in the footer should remain intact.>
+        <You can delete the links only if you purchased the pro version.>
+        <Licensing information: https://bootstrapmade.com/license/>
+        <Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/delicious-free-restaurant-bootstrap-theme/>
         <a href="https://infsolution.com.br/">Infsolution</a>
       </div>
     </div>
-  </footer>
+  </footer-->
 
 
 {% endblock %}

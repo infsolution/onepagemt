@@ -58,7 +58,7 @@ class ProdutoModelForm(forms.ModelForm):
 class PefilModelForm(forms.ModelForm):
     class Meta:
         model = Perfil
-        fields = ['id','titulo', 'descricao', 'nome', 'cargo', 'facebook', 'twitter', 'linkedin', 'instagran', 'foto']
+        fields = ['titulo', 'descricao', 'nome', 'cargo', 'facebook', 'twitter', 'linkedin', 'instagran', 'foto']
         widgets = {
             'titulo': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
             'descricao': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
@@ -68,5 +68,22 @@ class PefilModelForm(forms.ModelForm):
             'twitter': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
             'linkedin': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
             'instagran': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'foto': forms.FileInput(attrs={'class':'form-control'}),
+        }
+class TestimonialModelForm(forms.ModelForm):
+    class Meta:
+        model = Testimonial
+        fields = ['nome_cliente', 'profissao', 'declaracao', 'foto']
+        widgets = {
+            'nome_cliente': forms.TextInput(attrs={'class':'form-control', 'maxlength':155}),
+            'profissao': forms.TextInput(attrs={'class':'form-control', 'maxlength':155}),
+            'declaracao': Textarea(attrs={'class':'form-control', 'maxlength':550, 'rows':5, 'cols':40}),
+            'foto': forms.FileInput(attrs={'class':'form-control'}),
+        }
+class ImagemTestimonialModelForm(forms.ModelForm):
+    class Meta:
+        model = ImageTestimonial
+        fields = ['foto']
+        widgets = {
             'foto': forms.FileInput(attrs={'class':'form-control'}),
         }

@@ -15,5 +15,8 @@ urlpatterns = [
     path('message/', views.message, name='message'),
     path('perfil/', views.perfil, name='perfil'),
     path('perfil/<int:perfil_id>/', views.perfil, name='perfil_edit'),
+    path('testimonial/', views.testimonial, name='testimonial'),
+    path('testimonial/<int:testimonial_id>/', views.testimonial, name='del_edi_test'),
+    path('testimonial-image/',views.image, name='image'),
 
 ]

@@ -10,11 +10,15 @@ def index(request):
 	datas = {}
 	user = Perfil.objects.get(id=1)
 	aboult = Aboult.objects.all().first()
+	image_testimonial = ImageTestimonial.objects.all().first
 	datas['aboult'] = aboult
 	heros = Hero.objects.all()
 	datas['heros'] = heros
 	categorias = Categoria.objects.all()
 	datas['categorias'] = categorias
+	testimonials = Testimonial.objects.all()
+	datas['testimonials'] = testimonials
+	datas['image_testimonial'] = image_testimonial
 	return render(request, 'onepage/index.html', {'datas':datas, 'user':user})
 @login_required
 def panel(request):
@@ -23,16 +27,19 @@ def panel(request):
 	heros = Hero.objects.all()
 	categorias = Categoria.objects.all()
 	users = User.objects.all()#.exclude(id=request.user.id)
+	testimonials = Testimonial.objects.all()
 	form_aboult = AboultModelForm()
 	form_hero = HeroModelForm()
 	form_categoria = CategoriaModelForm()
 	form_produto = ProdutoModelForm()
 	form_perfil = PefilModelForm(instance=perfil)
+	form_testimonial = TestimonialModelForm()
 
 	return render(request, 'onepage/panel.html',{'user':user, 'form_aboult': form_aboult,
 	'form_hero': form_hero, 'heros': heros, 'form_categoria':form_categoria, 
 	'form_produto': form_produto, 'categorias':categorias, 'users':users,
-	'form_perfil':form_perfil, 'perfil': perfil})
+	'form_perfil':form_perfil, 'perfil': perfil, 'form_testimonial':form_testimonial,
+	'testimonials':testimonials})
 
 
 def do_login(request):
@@ -153,9 +160,7 @@ def perfil(request, perfil_id=0):
 	if request.method == 'POST':
 		try:
 			if request.POST['action']:
-				print("ENTROU NO IF DO EDITE")
 				perfil = Perfil.objects.get(id=perfil_id)
-				print(perfil)
 				perfil.titulo = request.POST['titulo']
 				perfil.descricao = request.POST['descricao']
 				perfil.nome = request.POST['nome']
@@ -169,8 +174,6 @@ def perfil(request, perfil_id=0):
 					url = save_image(request, 'foto')
 					perfil.foto = url
 				perfil.save()
-				print("\n\n")
-				print(perfil)
 				return redirect('/panel')
 		except Exception as identifier:
 			form = PefilModelForm(request.POST)
@@ -183,3 +186,44 @@ def perfil(request, perfil_id=0):
 				facebook=model.facebook, twitter=model.twitter, linkedin=model.linkedin, instagran=model.instagran, foto=url)
 				perfil.save()
 				return redirect('/panel')
+
+def testimonial(request, testimonial_id=0):
+	if request.method == 'POST':
+		try:
+			if request.POST['action']:
+				if request.POST['action'] == 'delete':
+					testi = Testimonial.objects.get(id=testimonial_id)
+					testi.delete()
+					return redirect('/panel')
+				if request.POST['action'] == 'edit':
+					testi = Testimonial.objects.get(id=testimonial_id)
+					testi.nome_cliente = request.POST['nome_cliente']
+					testi.profissao = request.POST['profissao']
+					testi.declaracao = request.POST['declaracao']
+					url=''
+					if request.FILES:
+						url = save_image(request, 'foto')
+					testi.foto = url
+					testi.save()
+					return redirect('/panel')
+
+
+		except Exception as identifier:
+			form = TestimonialModelForm(request.POST)
+			if form.is_valid():
+				model = form.save(commit=False)
+				url = ''
+				if request.FILES:
+					url = save_image(request, 'foto')
+				testimonial = Testimonial(nome_cliente=request.POST['nome_cliente'], profissao=request.POST['profissao'],
+				declaracao=request.POST['declaracao'], foto=url)
+				testimonial.save()
+				return redirect('/panel')
+
+def image(request):
+	if request.FILES:
+		image = ImageTestimonial(foto=save_image(request,'foto'))
+		image.save()
+		return redirect('/panel')
+		
+		
