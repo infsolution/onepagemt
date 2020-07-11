@@ -6,7 +6,13 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Emagrecendo com Chá - Recrutamento</title>
+  <title>
+    {% if datas.detalhes %}
+      {{datas.detalhes.titulo_navbar}}
+    {% else %}
+      Titulo
+    {% endif %}
+  </title>
   <meta content="" name="descriptison">
   <meta content="" name="keywords">
 
@@ -39,7 +45,107 @@
     .testimonials{
       background: url("{{datas.image_testimonial.foto}}") no-repeat;
     }
-    
+.chefs {
+  background: url("{{datas.detalhes.imagem_fundo_perfil}}") center center no-repeat;
+  background-size: cover;
+  padding: 60px 0;
+  position: relative;
+}
+.chefs::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 9;
+}
+
+.chefs .container {
+  position: relative;
+  z-index: 10;
+}
+
+.chefs .member {
+  text-align: center;
+  margin-bottom: 80px;
+  position: relative;
+}
+
+.chefs .member .pic {
+  overflow: hidden;
+}
+
+.chefs .member .member-info {
+  position: absolute;
+  bottom: -80px;
+  left: 20px;
+  right: 20px;
+  background: #fff;
+  padding: 20px 0;
+  color: #433f39;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+}
+
+.chefs .member h4 {
+  font-weight: 500;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #6c665c;
+  position: relative;
+  padding-bottom: 10px;
+  font-family: "Poppins", sans-serif;
+}
+
+.chefs .member h4::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: #ffcf88;
+  bottom: 0;
+  left: calc(50% - 25px);
+}
+
+.chefs .member span {
+  font-style: italic;
+  display: block;
+  font-size: 13px;
+}
+
+.chefs .member .social {
+  margin-top: 15px;
+}
+
+.chefs .member .social a {
+  transition: color 0.3s;
+  color: #7a7368;
+}
+
+.chefs .member .social a:hover {
+  color: #ffb03b;
+}
+
+.chefs .member .social i {
+  font-size: 16px;
+  margin: 0 2px;
+}
+
+@media (max-width: 992px) {
+  .chefs .member {
+    margin-bottom: 110px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .chefs {
+    background-attachment: fixed;
+  }
+}
   </style>
 </head>
 
@@ -48,8 +154,11 @@
   <!-- ======= Top Bar ======= -->
   <section id="topbar" class="d-none d-lg-flex align-items-center fixed-top topbar-transparent">
     <div class="container text-right">
-      <i class="icofont-phone"></i> (86) 99491-2272
-      <i class="icofont-clock-time icofont-rotate-180"></i> ppppp
+      <i class="icofont-phone"></i> 
+      {% if datas.detalhes %}
+      {{datas.detalhes.telefone}}
+    {% endif %}
+      <!--i class="icofont-clock-time icofont-rotate-180"></i> ppppp-->
     </div>
   </section>
 
@@ -58,7 +167,13 @@
     <div class="container d-flex align-items-center">
 
       <div class="logo mr-auto">
-        <h1 class="text-light"><a href="{% url 'index' %}"><span>Emagrecendo com Chá</span></a></h1>
+        <h1 class="text-light"><a href="{% url 'index' %}"><span>
+          {% if datas.detalhes %}
+          {{datas.detalhes.titulo_navbar}}
+          {% else %}
+          Home
+          {% endif %}
+        </span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
@@ -71,7 +186,7 @@
           <!--li><a href="#specials">Specials</a></li-->
           <!--li><a href="#events">Resultados</a></li-->
           <li><a href="#chefs">Leni</a></li>
-          <!--li><a href="#gallery"></a></li-->
+          <!--li><a href="#gallery">Galeria</a></li -->
           <li><a href="#contact">Contatos</a></li>
 
           <li class="book-a-table text-center"><a href="#contact">Me cadastrar</a></li>
@@ -244,7 +359,12 @@
       <div class="container">
 
         <div class="section-title">
+          {% if datas.detalhes %}
+          <h2>{{datas.detalhes.titulo_produtos}}</h2>
+          {% else %}
           <h2>Nossa variedade de <span>Produtos</span></h2>
+        {% endif %}
+         
         </div>
 
         <div class="row">
@@ -592,25 +712,39 @@
     </section --><!-- End Book A Table Section -->
 
     <!-- ======= Gallery Section ======= -->
-    <!-- section id="gallery" class="gallery">
+    <section id="gallery" class="gallery">
       <div class="container-fluid">
 
         <div class="section-title">
-          <h2>Some photos from <span>Our Restaurant</span></h2>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
+          <h2>
+            {% if datas.galeria %}
+            {{ datas.galeria.titulo }}
+            {% else %}
+            Some photos from <span>Our Restaurant</span>
+            {% endif %}
+          </h2>
+          <p>
+            {% if datas.galeria %}
+            {{ datas.galeria.frase_galeria }}
+            {% else %}
+            Fotos da galeria pra você
+            {% endif %}
+          </p>
         </div>
 
         <div class="row no-gutters">
-
+          {% if datas.galeria %}
+          {% for foto in datas.galeria.fotos.all %}
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/gallery/gallery-1.jpg" class="venobox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-1.jpg" alt="" class="img-fluid">
+              <a href="{{foto.foto}}" class="venobox" data-gall="gallery-item">
+                <img src="{{foto.foto}}" alt="{{foto}}" class="img-fluid">
               </a>
             </div>
           </div>
-
-          <div class="col-lg-3 col-md-4">
+          {% endfor %}
+          {% endif %}
+          <!--div class="col-lg-3 col-md-4">
             <div class="gallery-item">
               <a href="assets/img/gallery/gallery-2.jpg" class="venobox" data-gall="gallery-item">
                 <img src="assets/img/gallery/gallery-2.jpg" alt="" class="img-fluid">
@@ -664,12 +798,12 @@
                 <img src="assets/img/gallery/gallery-8.jpg" alt="" class="img-fluid">
               </a>
             </div>
-          </div>
+          </div-->
 
         </div>
 
       </div>
-    </section --><!-- End Gallery Section -->
+    </section><!-- End Gallery Section -->
 
     <!-- ======= Chefs Section ======= -->
     <section id="chefs" class="chefs">
@@ -843,8 +977,20 @@
       <div class="container">
 
         <div class="section-title">
-          <h2><span>Fale com a gente<span></h2>
-          <p>Deixe sua mensagem com seu email. telefone e nome completo e breve entraremos em contato com mais informações</p>
+          <h2><span>
+            {% if datas.detalhes %}
+              {{datas.detalhes.titulo_contatos}}
+            {% else %}
+              Titulo do contato
+            {% endif %}
+            <span></h2>
+          <p>
+            {% if datas.detalhes %}
+            {{datas.detalhes.frase_contatos}}
+            {% else %}
+              Diga algo para o cliente entrar em contato
+            {% endif %}
+          </p>
         </div>
       </div>
 
@@ -905,7 +1051,7 @@
           <div class="mb-3">
             <div class="loading">Loading</div>
             <div class="error-message"></div>
-            <div class="sent-message">Your message has been sent. Thank you!</div>
+            <div class="sent-message">Sua mensagem está sendo enviada. Obrigado!</div>
           </div>
           <div class="text-center"><button type="submit">Enviar Mensagem</button></div>
         </form>
@@ -918,14 +1064,26 @@
   <!-- ======= Footer ======= -->
   <footer id="footer">
     <div class="container">
-      <h3>Recrutamento Maravilhas da Terra</h3>
-      <p>Entre para nossa equipe e tenha ótimos lucros.</p>
+      <h3>
+        {% if datas.detalhes %}
+        {{datas.detalhes.titulo_rodape}}
+        {% else %}
+          Titulo do Rodapé
+        {% endif %}
+      </h3>
+      <p>
+        {% if datas.detalhes %}
+        {{datas.detalhes.frase_rodape}}
+        {% else %}
+          Frase do rodapé
+        {% endif %}
+      </p>
       <div class="social-links">
-        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="{{datas.detalhes.link_twitter}}" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="{{datas.detalhes.link_facebook}}" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="{{datas.detalhes.link_instagram}}" class="instagram"><i class="bx bxl-instagram"></i></a>
         <!-- a href="#" class="google-plus"><i class="bx bxl-skype"></i></-->
-        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        <a href="{{datas.detalhes.link_linkedin}}" class="linkedin"><i class="bx bxl-linkedin"></i></a>
       </div>
       <div class="copyright">
         &copy; Copyright <strong><span>Emagrecendo com Chá</span></strong>. All Rights Reserved

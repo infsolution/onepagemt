@@ -27,9 +27,10 @@ function show_content(element, text){
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	          <a class="dropdown-item" href="{% url 'panel' %}">Panel</a>
-	          <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-	          <div class="dropdown-divider"></div>
-	          <a class="dropdown-item" href="#">Something else here</a>
+			  <div class="dropdown-divider"></div> 
+			  <a class="dropdown-item" href="{% url 'logout' %}">Sair</a>
+	          
+	          <!--a class="dropdown-item" href="#">Something else here</a-->
 	        </div>
 	      </li>
 	    </ul>
@@ -49,8 +50,9 @@ function show_content(element, text){
 					<li onclick="show_content('show','produto')">Produtos</li>
 					<li onclick="show_content('show','testimonial')">Declarações</li>
 					<li onclick="show_content('show','perfil')">Leni</li>
-					<!--li onclick="show_content('show','galeria')">Galeria</li-->
+					<li onclick="show_content('show','galeria')">Galeria</li>
 					<li onclick="show_content('show','contatos')">Contatos</li>
+					<li onclick="show_content('show','detalhes')">Detalhes</li>
 				</ul>
 			</div>
 			<div class="col-md-10">
@@ -58,7 +60,7 @@ function show_content(element, text){
 					{% if error %}
 						{{ error }}
 					{% endif %}
-					<dir id="show" style="display: block"></dir>
+					<dir id="show" style="display: block"><p>Clique em um item do menu esquerdo para exibir as opções</p></dir>
 
 					<div id="aboult" style="display: none;">
 						<h2>Atualização da Seção Sobre nós</h2>
@@ -502,6 +504,105 @@ function show_content(element, text){
 					</div >
 					
 					<!--END SECTION TESTIMONIAL-->
+
+					<!--SECTION DETALHES-->
+						<div id="detalhes" style="display: none;">
+							<h2>Detalhes da página</h2>
+							<form action="{% url 'detail' detalhes.id %}" method="post" enctype="multipart/form-data">
+								{% csrf_token %}
+								{{form_detalhes}}
+								<br/>
+							<button type="submit" class="form-control btn btn-primary">Editar</button>
+							</form>
+						</div>
+					<!--SECTION GALERIA-->
+					<div id="galeria" style="display: none;"> 
+						<div class="row">
+							<div class="col-md-8">
+								<h2>Adicionar imagens à Galeria</h2>
+							</div>
+							<div class="col-md-4">
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editGalery" data-whatever="@getbootstrap">Editar Galeria</button>
+																	
+											<div class="modal fade" id="editGalery" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">Editar Galeria</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+													</div>
+													<div class="modal-body">
+													<form action="{% url 'edit_galery' %}" method="post" enctype="multipart/form-data">
+														{% csrf_token %}
+														{{  form_galery}}
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+															<button type="submit" class="btn btn-primary">Editar</button>
+														</div>
+													</form>
+													</div>
+												</div>
+												</div>
+											</div>
+							</div>
+						</div >
+						<form action="{% url 'galery' %}" method="post" enctype="multipart/form-data">
+							{% csrf_token %}
+							{{form_fotos}}
+							<br/>
+							<button type="submit" class="form-control btn btn-primary">Adicionar foto</button>
+						</form>
+						<h2>Imagens cadastradas</h2>
+						<table class="table table-houver">
+							<thead>>
+								<tr>
+									<th>Descrição</th>
+									<th>Local da imagem</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if galery %}
+									{% for foto in galery.fotos.all %}
+									<tr>
+										<th>{{foto.descricao_imagem}}</th>
+										<th>{{ foto.foto }}</th>
+										<th>
+											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delImageGalery" data-whatever="@getbootstrap">Apagar</button>
+																	
+											<div class="modal fade" id="delImageGalery" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">Atenção</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+													</div>
+													<div class="modal-body">
+														<p>Esta ação não pode ser desefeita...</p>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+															<a href="{% url 'del_image' foto.id %}" class="btn btn-primary">Apagar</a>
+														</div>
+													</div>
+												</div>
+												</div>
+											</div>
+										</th>
+									</tr>
+									{% endfor %}
+								{% endif %}
+							</tbody>
+
+						</table >
+					</div>
+
+					<!--END SECTION GALERIA-->
+
+
 
 				</div>
 			</div>

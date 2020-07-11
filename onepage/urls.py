@@ -18,5 +18,9 @@ urlpatterns = [
     path('testimonial/', views.testimonial, name='testimonial'),
     path('testimonial/<int:testimonial_id>/', views.testimonial, name='del_edi_test'),
     path('testimonial-image/',views.image, name='image'),
+    path('detalhe/<int:detail_id>', views.detail, name="detail"),
+    path('image-galery', views.image_calery, name='galery'),
+    path('edit-galery/', views.edit_galery, name='edit_galery'),
+    path('delete-image/<int:foto_id>/', views.del_image_galery, name="del_image"),
 
 ]

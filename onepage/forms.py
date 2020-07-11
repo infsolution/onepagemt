@@ -53,7 +53,7 @@ class ProdutoModelForm(forms.ModelForm):
             'nome': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
             'descricao': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
             'preco': forms.NumberInput(attrs={'class':'form-control', 'maxlength':255}),
-            'categoria':forms.Select(attrs={'class':'form-control'})
+            'categoria':forms.Select(attrs={'class':'form-control'}),
         }
 class PefilModelForm(forms.ModelForm):
     class Meta:
@@ -85,5 +85,41 @@ class ImagemTestimonialModelForm(forms.ModelForm):
         model = ImageTestimonial
         fields = ['foto']
         widgets = {
+            'foto': forms.FileInput(attrs={'class':'form-control'}),
+        }
+
+class DetalhesModelForm(forms.ModelForm):
+    class Meta:
+        model = Detalhes
+        fields = ('__all__')
+        widgets={
+            'telefone': forms.TextInput(attrs={'class':'form-control', 'maxlength':20}),
+            'titulo_navbar': forms.TextInput(attrs={'class':'form-control', 'maxlength':55}),
+            'titulo_produtos': forms.TextInput(attrs={'class':'form-control', 'maxlength':155}),
+            'titulo_contatos': forms.TextInput(attrs={'class':'form-control', 'maxlength':155}),
+            'frase_contatos': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'titulo_rodape': forms.TextInput(attrs={'class':'form-control', 'maxlength':155}),
+            'frase_rodape': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'link_facebook': forms.TextInput(attrs={'class':'form-control', 'maxlength':155}),
+            'link_twitter': forms.TextInput(attrs={'class':'form-control', 'maxlength':155}),
+            'link_instagram': forms.TextInput(attrs={'class':'form-control', 'maxlength':155}),
+            'link_linkedin': forms.TextInput(attrs={'class':'form-control', 'maxlength':155}),
+            'imagem_fundo_perfil': forms.FileInput(attrs={'class':'form-control'}),
+        }
+
+class GaleriModelForm(forms.ModelForm):
+    class Meta:
+        model = Galeri
+        fields = ('__all__')
+        widgets ={
+            'titulo': forms.TextInput(attrs={'class':'form-control', 'maxlength':155}),
+            'frase_galeria': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+        }
+class FotoGaleriaModelFrom(forms.ModelForm):
+    class Meta:
+        model = FotoGaleria
+        fields = ['descricao_imagem', 'foto']
+        widgets = {
+            'descricao_imagem': forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
             'foto': forms.FileInput(attrs={'class':'form-control'}),
         }

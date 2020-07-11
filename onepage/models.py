@@ -69,3 +69,33 @@ class ImageTestimonial(models.Model):
 	foto = models.ImageField(blank=True, null=True, upload_to='media/')
 	class Meta:
 		ordering = ('-id',)
+
+class Detalhes(models.Model):
+	telefone = models.CharField(max_length=20, null=False, default="(88)888888888")
+	titulo_navbar = models.CharField(max_length=55, null=False, default="Titulo da sua home")
+	titulo_produtos = models.CharField(max_length=155, null=False, default="Titulo da sessão produtos")
+	titulo_contatos = models.CharField(max_length=155, null=False, default="Titulo da sessão contatos")
+	frase_contatos = models.CharField(max_length=255, null=False, default="Frase da sessão contatos")
+	titulo_rodape = models.CharField(max_length=155, null=False, default="Titulo do redapé")
+	frase_rodape = models.CharField(max_length=155, null=False, default="Frase do rodapé")
+	link_facebook = models.CharField(max_length=155, null=False, default="https://facebook.com/seuusuario/")
+	link_twitter = models.CharField(max_length=155, null=False, default="https://twitter.com/seuusuario/")
+	link_instagram = models.CharField(max_length=155, null=False, default="https://instagram.com/seuusuario/")
+	link_linkedin = models.CharField(max_length=155, null=False, default="https://linkedin.com/seuusuario/")
+	imagem_fundo_perfil = models.ImageField(blank=True, null=True, upload_to='media/')
+	class Meta:
+		ordering = ('-id',)
+class Galeri(models.Model):
+	titulo =  models.CharField(max_length=155, null=False, default="Titulo da sua Galeria")
+	frase_galeria =  models.CharField(max_length=255, null=False, default="Frase da sua Galeria")
+	def __str__(self):
+		return self.titulo
+	class Meta:
+		ordering = ('-id',)
+	
+class FotoGaleria(models.Model):
+	galeria = models.ForeignKey(Galeri, on_delete= models.CASCADE, related_name='fotos')
+	descricao_imagem = models.CharField(max_length=99, null=True, default="descrição da imagem")
+	foto = models.ImageField(blank=True, null=True, upload_to='media/') 
+	def __str__(self):
+		return self.descricao_imagem

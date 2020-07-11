@@ -19,6 +19,8 @@ def index(request):
 	testimonials = Testimonial.objects.all()
 	datas['testimonials'] = testimonials
 	datas['image_testimonial'] = image_testimonial
+	datas['detalhes'] = get_object(Detalhes)#get_detalhes()
+	datas['galeria'] = get_object(Galeri)
 	return render(request, 'onepage/index.html', {'datas':datas, 'user':user})
 @login_required
 def panel(request):
@@ -34,12 +36,18 @@ def panel(request):
 	form_produto = ProdutoModelForm()
 	form_perfil = PefilModelForm(instance=perfil)
 	form_testimonial = TestimonialModelForm()
+	detalhes = get_object(Detalhes)
+	form_detalhes = DetalhesModelForm(instance=detalhes)
+	galery = get_object(Galeri)
+	form_fotos = FotoGaleriaModelFrom()
+	form_galery = GaleriModelForm(instance=get_object(Galeri))
 
 	return render(request, 'onepage/panel.html',{'user':user, 'form_aboult': form_aboult,
 	'form_hero': form_hero, 'heros': heros, 'form_categoria':form_categoria, 
 	'form_produto': form_produto, 'categorias':categorias, 'users':users,
 	'form_perfil':form_perfil, 'perfil': perfil, 'form_testimonial':form_testimonial,
-	'testimonials':testimonials})
+	'testimonials':testimonials, 'form_detalhes': form_detalhes, 'detalhes':detalhes,
+	'form_fotos': form_fotos, 'form_galery':form_galery, 'galery':galery})
 
 
 def do_login(request):
@@ -62,6 +70,14 @@ def save_image(request, image_file):
 		fs = FileSystemStorage()
 		name = fs.save(up_image.name, up_image)
 		return fs.url(name)
+
+def get_object(object):
+	obj = object.objects.all().first()
+	if obj == None:
+		obj = object()
+		obj.save()
+		return obj
+	return obj
 
 def add_aboult(request):
 	if request.method == 'POST':
@@ -225,5 +241,43 @@ def image(request):
 		image = ImageTestimonial(foto=save_image(request,'foto'))
 		image.save()
 		return redirect('/panel')
-		
-		
+def image_calery(request):
+	if request.FILES:
+		galery = get_object(Galeri)
+		image = FotoGaleria(galeria=galery, descricao_imagem=request.POST['descricao_imagem'], foto=save_image(request, 'foto'))
+		image.save()
+		return redirect('/panel')
+def detail(request, detail_id):
+	if request.method == 'POST':
+		detail = Detalhes.objects.get(id=detail_id)
+		detail.telefone = request.POST['telefone']
+		detail.titulo_navbar = request.POST['titulo_navbar']
+		detail.titulo_produtos = request.POST['titulo_produtos']
+		detail.titulo_contatos = request.POST['titulo_contatos']
+		detail.frase_contatos = request.POST['frase_contatos']
+		detail.titulo_rodape = request.POST['titulo_rodape']
+		detail.frase_rodape = request.POST['frase_rodape']
+		detail.link_facebook = request.POST['link_facebook']
+		detail.link_twitter = request.POST['link_twitter']
+		detail.link_instagram = request.POST['link_instagram']
+		detail.link_linkedin = request.POST['link_linkedin']
+		url = ''
+		if request.FILES:
+			url = save_image(request, 'imagem_fundo_perfil')
+		detail.imagem_fundo_perfil = url
+		detail.save()
+		return redirect('panel')
+def edit_galery(request):
+	if request.method == 'POST':
+		galery = get_object(Galeri)
+		galery.titulo = request.POST['titulo']
+		galery.frase_galeria = request.POST['frase_galeria']
+		galery.save()
+		return redirect('/panel')
+	else:
+		return HttpResponse("<p>Method not allowed!</p>")
+def del_image_galery(request, foto_id):
+	if request.method == 'GET':
+		foto = FotoGaleria.objects.get(id=foto_id)
+		foto.delete()
+		return redirect('/panel')
