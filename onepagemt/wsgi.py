@@ -15,7 +15,7 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 sys.path.append('/var/www/html/onepagemt')
-sys.path.append('/var/www/html/venvmt/lib/python3.5/site-packages')
+sys.path.append('/var/www/html/venvmt/lib/python3.7/site-packages')
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'onepagemt.settings')
 try:
