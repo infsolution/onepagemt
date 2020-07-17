@@ -24,9 +24,9 @@ def index(request):
 	return render(request, 'onepage/index.html', {'datas':datas, 'user':user})
 @login_required
 def panel(request):
-	user = None
-	if request.user:
-		user = User.objects.get(id=request.user.id)
+	#user = None
+	#if request.user:
+	#	user = User.objects.get(id=request.user.id)
 	perfil = Perfil.objects.all().first()
 	heros = Hero.objects.all()
 	categorias = Categoria.objects.all()
@@ -44,7 +44,7 @@ def panel(request):
 	form_fotos = FotoGaleriaModelFrom()
 	form_galery = GaleriModelForm(instance=get_object(Galeri))
 
-	return render(request, 'onepage/panel.html',{'user':user, 'form_aboult': form_aboult,
+	return render(request, 'onepage/panel.html',{'form_aboult': form_aboult,
 	'form_hero': form_hero, 'heros': heros, 'form_categoria':form_categoria, 
 	'form_produto': form_produto, 'categorias':categorias, 'users':users,
 	'form_perfil':form_perfil, 'perfil': perfil, 'form_testimonial':form_testimonial,
