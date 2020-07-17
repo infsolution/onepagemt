@@ -8,7 +8,7 @@ from .forms import *
 from .models import *
 def index(request):
 	datas = {}
-	user = Perfil.objects.get(id=1)
+	user = Perfil.objects.all().first()
 	aboult = Aboult.objects.all().first()
 	image_testimonial = ImageTestimonial.objects.all().first
 	datas['aboult'] = aboult
@@ -25,7 +25,7 @@ def index(request):
 @login_required
 def panel(request):
 	user = User.objects.get(id=request.user.id)
-	perfil = Perfil.objects.get(id=1)
+	perfil = Perfil.objects.all().first()
 	heros = Hero.objects.all()
 	categorias = Categoria.objects.all()
 	users = User.objects.all()#.exclude(id=request.user.id)

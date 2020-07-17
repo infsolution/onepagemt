@@ -808,7 +808,7 @@
     <!-- ======= Chefs Section ======= -->
     <section id="chefs" class="chefs">
       <div class="container">
-
+        {% if user %}
         <div class="section-title">
           <h2>{{ user.titulo }} <span></span></h2>
           <p>{{ user.descricao }}</p>
@@ -865,7 +865,7 @@
           </div-->
 
         </div>
-
+        {% endif %}
       </div>
     </section><!-- End Chefs Section -->
 
