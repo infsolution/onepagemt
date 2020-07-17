@@ -24,7 +24,9 @@ def index(request):
 	return render(request, 'onepage/index.html', {'datas':datas, 'user':user})
 @login_required
 def panel(request):
-	user = User.objects.get(id=request.user.id)
+	user = None
+	if request.user:
+		user = User.objects.get(id=request.user.id)
 	perfil = Perfil.objects.all().first()
 	heros = Hero.objects.all()
 	categorias = Categoria.objects.all()
