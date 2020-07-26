@@ -283,3 +283,8 @@ def del_image_galery(request, foto_id):
 		foto = FotoGaleria.objects.get(id=foto_id)
 		foto.delete()
 		return redirect('/panel')
+
+def delete_categoria(request, categoria_id):
+	cat = Categoria.objects.get(id=categoria_id)
+	cat.delete()
+	return redirect('/panel')

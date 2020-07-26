@@ -22,5 +22,6 @@ urlpatterns = [
     path('image-galery', views.image_calery, name='galery'),
     path('edit-galery/', views.edit_galery, name='edit_galery'),
     path('delete-image/<int:foto_id>/', views.del_image_galery, name="del_image"),
+    path('delete-categoria/<int:categoria_id>/',views.delete_categoria, name="delete_categoria" ),
 
 ]
