@@ -4,3 +4,5 @@ migrations/__pycache__/**
 onepagemt/__pycache__/**
 onepage/__pycache__/**
 media/**
+static/**
+onepage/static/**
